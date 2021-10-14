@@ -1,2 +1,2 @@
 # DirectXAV
-My project for AV 
+My project for AT (Advanced Technologies)

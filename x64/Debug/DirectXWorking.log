@@ -1,3 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (DirectXWorking.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   WinMain.cpp
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\WinMain.cpp(71,13): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
   DirectXWorking.vcxproj -> D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe

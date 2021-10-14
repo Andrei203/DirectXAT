@@ -21,12 +21,27 @@ int CALLBACK WinMain(
 	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = pClassName;
 	wc.hIconSm = nullptr;
-
 	RegisterClassEx(&wc);
+	// creating Window Instance
 	HWND hWnd = CreateWindowEx(
-		0, pClassName, "Xbox Window", WS_CAPTION | WS_MINIMIZE | WS_SYSMENU, 200, 200, 640, 480, nullptr, nullptr, hInstance, nullptr
+		0, pClassName, "DirectX11Game", 
+		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, 
+		200, 200, 
+		640, 480, 
+		nullptr, nullptr, 
+		hInstance, nullptr
 	);
+	// window display
 	ShowWindow(hWnd, SW_SHOW);
-	while (true);
+	
+	// messages
+	MSG msg; // message structure
+	while (
+		GetMessage(&msg, nullptr, 0, 0) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
 	return 0;
 }

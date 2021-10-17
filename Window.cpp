@@ -40,7 +40,7 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept
 }
 
 //window functions
-Window::Window(int width, int height, const char* name) noexcept
+Window::Window(int width, int height, const char* name)
 {
 	//window size based on desired client size
 	RECT wr;
@@ -57,6 +57,8 @@ Window::Window(int width, int height, const char* name) noexcept
 	);
 	//show window
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	// graphic object
+	pRnd = std::make_unique<Renderer>(hWnd);
 }
 
 Window::~Window()
@@ -65,6 +67,34 @@ Window::~Window()
 }
 
 //handles all the messages
+
+void Window::setTitle(std::string title)
+{
+	SetWindowText(hWnd, title.c_str());
+}
+
+std::optional<int> Window::ProcessMessages()
+{
+	MSG msg;
+
+	while ((PeekMessage(&msg, nullptr, 0, 0,PM_REMOVE)))
+	{
+		
+		if (msg.message == WM_QUIT)
+		{
+			return msg.wParam;
+		}
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	// wParam here is the value passed to PostQuitMessage
+	return {};
+}
+
+Renderer& Window::Rnd()
+{
+	return *pRnd;
+}
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

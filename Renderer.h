@@ -1,22 +1,22 @@
 #pragma once
 #include <d3d11.h>
+#include <vector>
+#include<wrl.h>
 class Renderer
 {
 public:
 	Renderer(HWND hWnd);
 	Renderer(const Renderer&) = delete;
 	Renderer& operator=(const Renderer&) = delete;
-	~Renderer();
+	~Renderer() = default;
 	void EndFrame();
-	void ClearBuffer(float red, float green, float blue) noexcept
-	{
-		const float color[] = { red,green,blue,1.0f };
-		pContext->ClearRenderTargetView(pTarget, color);
-	}
+	void ClearBuffer(float red, float green, float blue) noexcept;
+	void DrawTestTriangle();
 private:
-	ID3D11Device* pDevice = nullptr;
-	IDXGISwapChain* pSwap = nullptr;
-	ID3D11DeviceContext* pContext = nullptr;
-	ID3D11RenderTargetView* pTarget = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
+	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pContext;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
+
 };
 

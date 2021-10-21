@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe</FullPath>
+      <FullPath>C:\Users\bandr\Pictures\New folder\DirectXAV\x64\Debug\DirectXGame.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\PixelShader.cso</FullPath>
+      <FullPath>C:\Users\bandr\Pictures\New folder\DirectXAV\PixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\VertexShader.cso</FullPath>
+      <FullPath>C:\Users\bandr\Pictures\New folder\DirectXAV\VertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

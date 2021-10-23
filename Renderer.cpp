@@ -58,7 +58,7 @@ void Renderer::ClearBuffer(float red, float green, float blue) noexcept
 	const float colour[] = { red,green,blue,1.0f };
 	pContext->ClearRenderTargetView(pTarget.Get(), colour);
 }
-void Renderer::DrawTestTriangle()
+void Renderer::DrawTestTriangle(float angle)
 {
 	namespace wrl = Microsoft::WRL;
 	
@@ -84,10 +84,10 @@ void Renderer::DrawTestTriangle()
 		{ -0.5f,-0.5f,0,0,255,0},
 		{-0.3f,0.3f,0,255,0,0},
 		{0.3f,0.3f,0,0,255,0},
-		{0.0f,-0.8f,255,0,0,0},
+		{0.0f,-1.0f,255,0,0,0},
 	};
-	vertices[0].color.g = 255;
 
+	vertices[0].color.g = 255;
 	wrl::ComPtr<ID3D11Buffer> pVertexBuffer;
 	D3D11_BUFFER_DESC bd = {};
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -137,7 +137,31 @@ void Renderer::DrawTestTriangle()
 			float element[4][4];
 		}transformation;
 	};
+	const ConstantBuffer cb =
+	{
+		{
+			(3.0f / 4.0f) * std::cos(angle), std::sin(angle),  0.0f, 0.0f,
+			(3.0f / 4.0f) * -std::sin(angle), std::cos(angle), 0.0f, 0.0f,
+			0.0f,	0.0f,					   1.0f, 0.0f,
+			0.0f,   0.0f,				       0.0f, 1.0f,
+		}
+	};
+	//constant buffer
+	wrl::ComPtr<ID3D11Buffer> pConstantBuffer;
+	D3D11_BUFFER_DESC cbd;
+	cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cbd.Usage = D3D11_USAGE_DYNAMIC;
+	cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cbd.MiscFlags = 0u;
+	cbd.ByteWidth = sizeof(cb);
+	cbd.StructureByteStride = 0u;
+	D3D11_SUBRESOURCE_DATA csd = {};
+	csd.pSysMem = &cb;
 
+	// bind constant buffer to vertex shader
+	pDevice->CreateBuffer(&cbd, &csd, &pConstantBuffer);
+
+	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
 
 	//create pixel shader
 	wrl::ComPtr<ID3D11PixelShader> pPixelShader;

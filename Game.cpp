@@ -26,6 +26,6 @@ void Game::Update()
 	const float g = sin(t+2.0f) / 2.0f + 0.5f;
 	const float b = sin(t+4.0f) / 2.0f + 0.5f;
 	wnd.Rnd().ClearBuffer(r, g, b);
-	wnd.Rnd().DrawTestTriangle();
+	wnd.Rnd().DrawTestTriangle(timer.Time());
 	wnd.Rnd().EndFrame();
 }

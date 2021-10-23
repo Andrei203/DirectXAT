@@ -11,7 +11,7 @@ public:
 	~Renderer() = default;
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue) noexcept;
-	void DrawTestTriangle();
+	void DrawTestTriangle(float angle);
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;

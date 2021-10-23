@@ -1,2 +1,3 @@
 C:\Users\bandr\Pictures\DirectXWorking\x64\Debug\DirectXWorking.exe
 D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe
+C:\Users\bandr\Pictures\New folder\DirectXAV\x64\Debug\DirectXGame.exe

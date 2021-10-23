@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game():wnd(640,480,"Game Window")
+Game::Game():wnd(800,600,"Game Window")
 {
 
 }

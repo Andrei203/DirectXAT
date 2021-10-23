@@ -121,6 +121,7 @@ void Renderer::DrawTestTriangle()
 	// bind vertex layout
 	pContext->IASetInputLayout(pInputLayout.Get());
 
+
 	//bind render target
 	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), nullptr);
 

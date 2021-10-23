@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <string>
 #include <optional>
+#include "Mouse.h"
 #include "Renderer.h"
 #include <memory>
 class Window
@@ -34,6 +35,7 @@ private:
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 public:
+	Mouse mouse;
 private:
 	int width;
 	int height;

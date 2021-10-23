@@ -7,7 +7,7 @@ struct VSOut
 //using structure to output position + colour
 cbuffer CBuf
 {
-	row_major matrix transform;
+	matrix transform;
 	//indicates 4x4 float
 };
 

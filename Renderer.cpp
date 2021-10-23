@@ -1,10 +1,14 @@
 #include "Renderer.h"
-namespace wrl = Microsoft::WRL;
-#pragma comment(lib,"d3d11.lib")
-#pragma comment(lib, "D3DCompiler.lib")
 #include <d3dcompiler.h>
 #include <sstream>
+#include <cmath>
+#include <DirectXMath.h>
 
+namespace wrl = Microsoft::WRL;
+namespace dx = DirectX;
+
+#pragma comment(lib,"d3d11.lib")
+#pragma comment(lib, "D3DCompiler.lib")
 
 Renderer::Renderer(HWND hWnd)
 {
@@ -67,6 +71,7 @@ void Renderer::DrawTestTriangle(float angle)
 		struct {
 			float x;
 			float y;
+			float z;
 		}position;
 
 		struct {
@@ -79,12 +84,14 @@ void Renderer::DrawTestTriangle(float angle)
 	//create vertex buffer ( 1 2d triangle)
 	Vertex vertices[] =
 	{
-		{ 0.0f,0.5f,255,0,0,0},
-		{ 0.5f,-0.5f,0,255,0,0},
-		{ -0.5f,-0.5f,0,0,255,0},
-		{-0.3f,0.3f,0,255,0,0},
-		{0.3f,0.3f,0,0,255,0},
-		{0.0f,-1.0f,255,0,0,0},
+		{-1.0f,-1.0f,1 - .0f, 255,0,0},
+		{1.0f,-1.0f,-1.0f,  0,255,0},
+		{-1.0f,1.0f,-1.0f,  0,0,255},
+		{1.0f,1.0f,-1.0f,	255,255,0},
+		{-1.0f,-1.0f,1.0f,	255,0,255},
+		{1.0f,-1.0f,1.0f,	0,255,255},
+		{-1.0f,1.0f,1.0f,	0,0,0},
+		{1.0f,1.0f,1.0f,	255,255,255},
 	};
 
 	vertices[0].color.g = 255;
@@ -110,10 +117,12 @@ void Renderer::DrawTestTriangle(float angle)
 	//creating index buffer
 	const unsigned short indices[] =
 	{
-		0,1,2,
-		0,2,3,
-		0,4,1,
-		2,1,5,
+		0,2,1, 2,3,1,
+		1,3,5, 3,7,5,
+		2,6,3, 3,6,7,
+		4,5,7, 4,7,6,
+		0,4,2, 2,4,6,
+		0,1,4, 1,5,4,
 	};
 	wrl::ComPtr<ID3D11Buffer> pIndexBuffer;
 	D3D11_BUFFER_DESC ibd = {};
@@ -132,20 +141,22 @@ void Renderer::DrawTestTriangle(float angle)
 	//creating constant buffer for transformation matrix
 	struct ConstantBuffer
 	{
-		struct
-		{
-			float element[4][4];
-		}transformation;
+		dx::XMMATRIX transform;
 	};
+
 	const ConstantBuffer cb =
 	{
 		{
-			(3.0f / 4.0f) * std::cos(angle), std::sin(angle),  0.0f, 0.0f,
-			(3.0f / 4.0f) * -std::sin(angle), std::cos(angle), 0.0f, 0.0f,
-			0.0f,	0.0f,					   1.0f, 0.0f,
-			0.0f,   0.0f,				       0.0f, 1.0f,
+			dx::XMMatrixTranspose(
+				dx::XMMatrixRotationZ(angle) *
+				//dx::XMMatrixRotationX(angle) *
+				dx::XMMatrixScaling(3.0f / 4.0f,1.0f, 1.0f) *
+				dx::XMMatrixTranslation(3.0f / 4.0f, 1.0f, 0.0f)
+				//dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 1.0f,5.0f)
+			)
 		}
 	};
+
 	//constant buffer
 	wrl::ComPtr<ID3D11Buffer> pConstantBuffer;
 	D3D11_BUFFER_DESC cbd;

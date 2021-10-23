@@ -126,9 +126,19 @@ void Renderer::DrawTestTriangle()
 	D3D11_SUBRESOURCE_DATA isd = {};
 	isd.pSysMem = indices;
 	pDevice->CreateBuffer(&ibd, &isd, &pIndexBuffer);
-
+	// bind index buffer
 	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u);
 	
+	//creating constant buffer for transformation matrix
+	struct ConstantBuffer
+	{
+		struct
+		{
+			float element[4][4];
+		}transformation;
+	};
+
+
 	//create pixel shader
 	wrl::ComPtr<ID3D11PixelShader> pPixelShader;
 	wrl::ComPtr<ID3DBlob> pBlob;

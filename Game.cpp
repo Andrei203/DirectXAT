@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game():wnd(640,480,"Game Window")
+Game::Game():wnd(800,600,"Game Window")
 {
 
 }
@@ -27,5 +27,6 @@ void Game::Update()
 	const float b = sin(t+4.0f) / 2.0f + 0.5f;
 	wnd.Rnd().ClearBuffer(r, g, b);
 	wnd.Rnd().DrawTestTriangle(timer.Time());
+	wnd.Rnd().DrawTestTriangle(-timer.Time());
 	wnd.Rnd().EndFrame();
 }

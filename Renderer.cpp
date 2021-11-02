@@ -97,7 +97,7 @@ void Renderer::ClearBuffer(float red, float green, float blue) noexcept
 	pContext->ClearRenderTargetView(pTarget.Get(), colour);
 	pContext->ClearDepthStencilView(pDSV.Get(),D3D11_CLEAR_DEPTH,1.0f,0u);
 }
-void Renderer::DrawTestTriangle(float angle)
+void Renderer::DrawTestTriangle(float angle, float xPos, float yPos, float zPos)
 {
 	namespace wrl = Microsoft::WRL;
 	
@@ -177,7 +177,7 @@ void Renderer::DrawTestTriangle(float angle)
 			dx::XMMatrixTranspose(
 				dx::XMMatrixRotationZ(angle) *
 				dx::XMMatrixRotationX(angle) *
-				dx::XMMatrixTranslation(0.0f, 0.0f, 4.0f) *
+				dx::XMMatrixTranslation(xPos, yPos, zPos) *
 				dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f,10.0f)
 			)
 		}

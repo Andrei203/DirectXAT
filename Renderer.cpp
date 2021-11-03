@@ -168,19 +168,24 @@ void Renderer::DrawTestTriangle(float angle, float xPos, float yPos, float zPos)
 	//creating constant buffer for transformation matrix
 	struct ConstantBuffer
 	{
-		dx::XMMATRIX transform;
+		dx::XMMATRIX model;
+		dx::XMMATRIX view;
+		dx::XMMATRIX projection;
 	};
 
 	const ConstantBuffer cb =
 	{
-		{
+		/*dx::XMMatrixIdentity(),
+		dx::XMMatrixTranslation(0.0F,1.0F,2.0F),
+		dx::XMMatrixPerspectiveRH(1.0F, 600.0F / 800.0F, 0.5F, 10.0F)*/
+		 {
 			dx::XMMatrixTranspose(
 				dx::XMMatrixRotationZ(angle) *
 				dx::XMMatrixRotationX(angle) *
 				dx::XMMatrixTranslation(xPos, yPos, zPos) *
 				dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f,10.0f)
 			)
-		}
+		},
 	};
 
 	//constant buffer

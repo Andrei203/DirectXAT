@@ -4,6 +4,7 @@
 #include<wrl.h>
 class Renderer
 {
+	friend class Bindable;
 public:
 	Renderer(HWND hWnd);
 	Renderer(const Renderer&) = delete;

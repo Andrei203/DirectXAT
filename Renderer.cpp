@@ -177,7 +177,7 @@ void Renderer::DrawTestTriangle(float angle, float xPos, float yPos, float zPos)
 	{
 		/*dx::XMMatrixIdentity(),
 		dx::XMMatrixTranslation(0.0F,1.0F,2.0F),
-		dx::XMMatrixPerspectiveRH(1.0F, 600.0F / 800.0F, 0.5F, 10.0F)*/
+		dx::XMMatrixPerspectiveRH(1.0F, 600.0F / 800.0F, 0.5F, 10.0F) camera almost implemented */
 		 {
 			dx::XMMatrixTranspose(
 				dx::XMMatrixRotationZ(angle) *

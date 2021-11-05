@@ -4,7 +4,7 @@ Topology::Topology(Renderer& Rnd, D3D11_PRIMITIVE_TOPOLOGY type):type(type)
 {
 }
 
-void Topology::Bind(Renderer& Rnd) noexcept
+void Topology::Bind(Renderer& Rnd)
 {
-	GetContext(Rnd)->IASetPrimitiveTopology(type);
+	Rnd.GetContext()->IASetPrimitiveTopology(type);
 }

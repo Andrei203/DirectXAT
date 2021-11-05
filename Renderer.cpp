@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cmath>
 #include <DirectXMath.h>
+#include "Cube.h"
 
 namespace wrl = Microsoft::WRL;
 namespace dx = DirectX;
@@ -89,6 +90,17 @@ Renderer::Renderer(HWND hWnd)
 	
 	//bind depth stensil view to OM
 	pContext->OMSetRenderTargets(1u, pTarget.GetAddressOf(), pDSV.Get());
+
+	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	D3D11_VIEWPORT vp;
+	vp.Width = 800;
+	vp.Height = 600;
+	vp.MinDepth = 0;
+	vp.MaxDepth = 1;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	pContext->RSSetViewports(1u, &vp);
 }
 
 void Renderer::ClearBuffer(float red, float green, float blue) noexcept
@@ -274,16 +286,16 @@ void Renderer::DrawTestTriangle(float angle, float xPos, float yPos, float zPos)
 
 
 	//configure viewport
-	D3D11_VIEWPORT vp;
-	vp.Width = 800;
-	vp.Height = 600;
-	vp.MinDepth = 0;
-	vp.MaxDepth = 1;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	pContext->RSSetViewports(1u, &vp);
 
 	pContext->DrawIndexed((UINT)std::size(indices), 0u,0u);
+}
+ID3D11Device* Renderer::GetDevice()
+{
+	return pDevice.Get();
+}
+ID3D11DeviceContext* Renderer::GetContext()
+{
+	return pContext.Get();
 }
 void Renderer::EndFrame()
 {

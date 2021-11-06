@@ -123,6 +123,12 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	
 	switch (msg)
 	{
+	case WM_KEYDOWN:
+		keyboard.SetKey(wParam, true);
+		break;
+	case WM_KEYUP:
+		keyboard.SetKey(wParam, false);
+		break;
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;

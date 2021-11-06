@@ -159,12 +159,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bindable.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConstantBuffers.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Topology.cpp" />
@@ -176,12 +178,14 @@
   <ItemGroup>
     <ClInclude Include="Bindable.h" />
     <ClInclude Include="BindableBase.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ConstantBuffers.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Topology.h" />

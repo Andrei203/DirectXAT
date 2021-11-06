@@ -101,6 +101,8 @@ Renderer::Renderer(HWND hWnd)
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	pContext->RSSetViewports(1u, &vp);
+	constantBuffer = std::make_unique<ConstantBuffer>(pDevice.Get(), constantBufferData);
+	constantBuffer->Bind(pContext.Get(), constantBufferData);
 }
 
 void Renderer::ClearBuffer(float red, float green, float blue) noexcept
@@ -109,186 +111,7 @@ void Renderer::ClearBuffer(float red, float green, float blue) noexcept
 	pContext->ClearRenderTargetView(pTarget.Get(), colour);
 	pContext->ClearDepthStencilView(pDSV.Get(),D3D11_CLEAR_DEPTH,1.0f,0u);
 }
-void Renderer::DrawTestTriangle(float angle, float xPos, float yPos, float zPos)
-{
-	namespace wrl = Microsoft::WRL;
-	
-	struct Vertex
-	{
-		struct {
-			float x;
-			float y;
-			float z;
-		}position;
-	};
-	//create vertex buffer ( 1 2d triangle)
-	Vertex vertices[] =
-	{
-		{ -1.0f,-1.0f,-1.0f	 },
-		{ 1.0f,-1.0f,-1.0f	 },
-		{ -1.0f,1.0f,-1.0f	 },
-		{ 1.0f,1.0f,-1.0f	  },
-		{ -1.0f,-1.0f,1.0f	 },
-		{ 1.0f,-1.0f,1.0f	  },
-		{ -1.0f,1.0f,1.0f	 },
-		{ 1.0f,1.0f,1.0f	 },
-	};
 
-	wrl::ComPtr<ID3D11Buffer> pVertexBuffer;
-	D3D11_BUFFER_DESC bd = {};
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.CPUAccessFlags = 0u;
-	bd.MiscFlags = 0u;
-	bd.ByteWidth = sizeof(vertices);
-	bd.StructureByteStride = sizeof(Vertex);
-	D3D11_SUBRESOURCE_DATA sd = {};
-	sd.pSysMem = vertices;
-	pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer);
-
-
-
-	//vertex to pipeline
-	const UINT stride = sizeof(Vertex);
-	const UINT offset = 0u;
-	pContext->IASetVertexBuffers(0u,1u,pVertexBuffer.GetAddressOf(),&stride,&offset);
-
-	//creating index buffer
-	const unsigned short indices[] =
-	{
-		0,2,1, 2,3,1,
-		1,3,5, 3,7,5,
-		2,6,3, 3,6,7,
-		4,5,7, 4,7,6,
-		0,4,2, 2,4,6,
-		0,1,4, 1,5,4
-	};
-	wrl::ComPtr<ID3D11Buffer> pIndexBuffer;
-	D3D11_BUFFER_DESC ibd = {};
-	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	ibd.Usage = D3D11_USAGE_DEFAULT;
-	ibd.CPUAccessFlags = 0u;
-	ibd.MiscFlags = 0u;
-	ibd.ByteWidth = sizeof(indices);
-	ibd.StructureByteStride = sizeof(unsigned short);
-	D3D11_SUBRESOURCE_DATA isd = {};
-	isd.pSysMem = indices;
-	pDevice->CreateBuffer(&ibd, &isd, &pIndexBuffer);
-	// bind index buffer
-	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u);
-	
-	//creating constant buffer for transformation matrix
-	struct ConstantBuffer
-	{
-		dx::XMMATRIX model;
-		dx::XMMATRIX view;
-		dx::XMMATRIX projection;
-	};
-
-	const ConstantBuffer cb =
-	{
-		/*dx::XMMatrixIdentity(),
-		dx::XMMatrixTranslation(0.0F,1.0F,2.0F),
-		dx::XMMatrixPerspectiveRH(1.0F, 600.0F / 800.0F, 0.5F, 10.0F) camera almost implemented */
-		 {
-			dx::XMMatrixTranspose(
-				dx::XMMatrixRotationZ(angle) *
-				dx::XMMatrixRotationX(angle) *
-				dx::XMMatrixTranslation(xPos, yPos, zPos) *
-				dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f,10.0f)
-			)
-		},
-	};
-
-	//constant buffer
-	wrl::ComPtr<ID3D11Buffer> pConstantBuffer;
-	D3D11_BUFFER_DESC cbd;
-	cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cbd.Usage = D3D11_USAGE_DYNAMIC;
-	cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	cbd.MiscFlags = 0u;
-	cbd.ByteWidth = sizeof(cb);
-	cbd.StructureByteStride = 0u;
-	D3D11_SUBRESOURCE_DATA csd = {};
-	csd.pSysMem = &cb;	
-	pDevice->CreateBuffer(&cbd, &csd, &pConstantBuffer);
-	// bind constant buffer to vertex shader
-	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
-
-
-	struct ConstantBuffer2
-	{
-		struct
-		{
-			float r;
-			float g;
-			float b;
-			float a;
-		} face_colors[6];
-	};
-	const ConstantBuffer2 cb2 =
-	{
-		{
-			{1.0f,0.0f,1.0f},
-			{1.0f,0.0f,0.0f},
-			{0.0f,1.0f,0.0f},
-			{0.0f,0.0f,1.0f},
-			{1.0f,1.0f,0.0f},
-			{0.0f,1.0f,1.0f},
-		}
-	};
-	//constant buffer 2
-	wrl::ComPtr<ID3D11Buffer> pConstantBuffer2;
-	D3D11_BUFFER_DESC cbd2;
-	cbd2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cbd2.Usage = D3D11_USAGE_DEFAULT;
-	cbd2.CPUAccessFlags = 0u;
-	cbd2.MiscFlags = 0u;
-	cbd2.ByteWidth = sizeof(cb2);
-	cbd2.StructureByteStride = 0u;
-	D3D11_SUBRESOURCE_DATA csd2 = {};
-	csd2.pSysMem = &cb2;
-	pDevice->CreateBuffer(&cbd2, &csd2, &pConstantBuffer2);
-	// bind constant buffer to pixel shader
-	pContext->PSSetConstantBuffers(0u, 1u, pConstantBuffer2.GetAddressOf());
-
-	//create pixel shader
-	wrl::ComPtr<ID3D11PixelShader> pPixelShader;
-	wrl::ComPtr<ID3DBlob> pBlob;
-	D3DReadFileToBlob(L"PixelShader.cso", &pBlob);
-	pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader);
-
-	//bind pixel shader
-	pContext->PSSetShader(pPixelShader.Get(), nullptr, 0u);
-	
-	//create vertex shader
-	wrl::ComPtr<ID3D11VertexShader> pVertexShader;
-	D3DReadFileToBlob(L"VertexShader.cso", &pBlob);
-	pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader);
-
-	//bind vertex shader
-	pContext->VSSetShader(pVertexShader.Get(), nullptr, 0u);
-	
-	//input vertext layout 2D POS only
-	wrl::ComPtr<ID3D11InputLayout> pInputLayout;
-	const D3D11_INPUT_ELEMENT_DESC ied[] =
-	{
-		{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
-	};
-	pDevice->CreateInputLayout(ied, (UINT)std::size(ied), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
-	
-	// bind vertex layout
-	pContext->IASetInputLayout(pInputLayout.Get());
-
-
-	//primitive topology for triangle list (3 vertices group)
-	pContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-	//configure viewport
-
-	pContext->DrawIndexed((UINT)std::size(indices), 0u,0u);
-}
 ID3D11Device* Renderer::GetDevice()
 {
 	return pDevice.Get();
@@ -296,6 +119,16 @@ ID3D11Device* Renderer::GetDevice()
 ID3D11DeviceContext* Renderer::GetContext()
 {
 	return pContext.Get();
+}
+void Renderer::SetModelMatrix(DirectX::XMMATRIX model)
+{
+	constantBufferData.model = DirectX::XMMatrixTranspose(model);
+	constantBuffer->Bind(pContext.Get(),constantBufferData);
+}
+void Renderer::SetViewMatrix(DirectX::XMMATRIX view)
+{
+	constantBufferData.view = DirectX::XMMatrixTranspose(view);
+	constantBuffer->Bind(pContext.Get(), constantBufferData);
 }
 void Renderer::EndFrame()
 {

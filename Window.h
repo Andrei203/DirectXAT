@@ -5,6 +5,8 @@
 #include "Mouse.h"
 #include "Renderer.h"
 #include <memory>
+#include "Keyboard.h"
+
 class Window
 {
 private:
@@ -35,6 +37,7 @@ private:
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 public:
+	Keyboard keyboard;
 	Mouse mouse;
 private:
 	int width;

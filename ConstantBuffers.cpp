@@ -1,6 +1,6 @@
 #include "ConstantBuffers.h"
 
-ConstantBuffer::ConstantBuffer(Renderer& Rnd, const ConstantBufferData& bufferData)
+ConstantBuffer::ConstantBuffer(ID3D11Device* Rnd, const ConstantBufferData& bufferData)
 {
 	D3D11_BUFFER_DESC bufferDesc;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -12,13 +12,13 @@ ConstantBuffer::ConstantBuffer(Renderer& Rnd, const ConstantBufferData& bufferDa
 
 	D3D11_SUBRESOURCE_DATA subresourceData = {};
 	subresourceData.pSysMem = &bufferData;
-	Rnd.GetDevice()->CreateBuffer(&bufferDesc, &subresourceData, &constantBuffer);
+	Rnd->CreateBuffer(&bufferDesc, &subresourceData, &constantBuffer);
 }
 
-void ConstantBuffer::Bind(Renderer& Rnd, const ConstantBufferData& bufferData)
+void ConstantBuffer::Bind(ID3D11DeviceContext* Rnd, const ConstantBufferData& bufferData)
 {
 	D3D11_MAPPED_SUBRESOURCE mappedSubresource;
-	Rnd.GetContext()->Map(
+	Rnd->Map(
 		constantBuffer.Get(),
 		0U,
 		D3D11_MAP_WRITE_DISCARD,
@@ -26,10 +26,9 @@ void ConstantBuffer::Bind(Renderer& Rnd, const ConstantBufferData& bufferData)
 		&mappedSubresource
 	);
 	memcpy(mappedSubresource.pData, &bufferData, sizeof(bufferData));
-	auto* ctx = Rnd.GetContext();
-	ctx->Unmap(constantBuffer.Get(), 0U);
+	Rnd->Unmap(constantBuffer.Get(), 0U);
 
-	ctx->VSSetConstantBuffers(
+	Rnd->VSSetConstantBuffers(
 		0U,
 		1U,
 		constantBuffer.GetAddressOf()

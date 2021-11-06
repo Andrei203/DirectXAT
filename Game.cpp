@@ -24,6 +24,7 @@ int Game::init()
 void Game::Update()
 {
 	timer.Tick();
+	wnd.keyboard.Tick();
 	const float t = timer.Time();
 	const float r = sin(t) / 2.0f + 0.5f;
 	const float g = sin(t+2.0f) / 2.0f + 0.5f;
@@ -35,6 +36,9 @@ void Game::Update()
 	{
 		drawable->Draw(wnd.Rnd());
 	}
+	float inputX = static_cast<float>(wnd.keyboard.GetKey('A')) - static_cast<float>(wnd.keyboard.GetKey('D'));
+	float inputY = static_cast<float>(wnd.keyboard.GetKey('W')) - static_cast<float>(wnd.keyboard.GetKey('S'));
+	wnd.Rnd().constantBufferData.view *= DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(inputX * timer.DeltaTime(), 0.0F, inputY * timer.DeltaTime()));
 	
 	wnd.Rnd().EndFrame();
 }

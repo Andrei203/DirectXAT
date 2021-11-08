@@ -27,7 +27,7 @@ Cube::Cube(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, 
         0,4,2, 2,4,6,
         0,1,4, 1,5,4
     }));
-    AddBind(std::make_unique<Texture>(Rnd, L"UVChecker.png"));
+    AddBind(std::make_unique<Texture>(Rnd, L"xbox.png"));
     AddBind(std::make_unique<TextureSampler>(Rnd));
 }
 

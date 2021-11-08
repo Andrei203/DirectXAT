@@ -22,6 +22,7 @@ Window::WindowClass::WindowClass() noexcept
 	wc.lpszClassName = GetName();
 	wc.hIconSm = nullptr;
 	RegisterClassEx(&wc);
+	
 }
 //destructor
 Window::WindowClass::~WindowClass()

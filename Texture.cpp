@@ -3,6 +3,8 @@
 Texture::Texture(Renderer& Rnd, const std::wstring& filepath)
 {
 	auto result = DirectX::CreateWICTextureFromFile(Rnd.GetDevice(), filepath.c_str(), NULL, &shaderResourceView);
+	assert(SUCCEEDED(result));
+	
 }
 
 void Texture::Bind(Renderer& Rnd)

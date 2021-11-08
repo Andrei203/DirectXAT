@@ -9,7 +9,7 @@ Texture::Texture(Renderer& Rnd, const std::wstring& filepath)
 
 void Texture::Bind(Renderer& Rnd)
 {
-	Rnd.GetContext()->PSGetShaderResources
+	Rnd.GetContext()->PSSetShaderResources
 	(
 		0U,
 		1U,

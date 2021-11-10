@@ -5,5 +5,5 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=int
           ]
-D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Game.cpp(68): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,float,float,float,int,int,float,0>(Renderer &,float &&,float &&,float &&,int &&,int &&,float &&)' being compiled
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Game.cpp(68): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,float,float,float,int,float,int,0>(Renderer &,float &&,float &&,float &&,int &&,float &&,int &&)' being compiled
   DirectXWorking.vcxproj -> D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe

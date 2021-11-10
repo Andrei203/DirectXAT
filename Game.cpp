@@ -40,8 +40,8 @@ void Game::Update()
 	float inputY = static_cast<float>(wnd.keyboard.GetKey('W')) - static_cast<float>(wnd.keyboard.GetKey('S'));
 	float inputCamera = static_cast<float>(wnd.keyboard.GetKey('I')) - static_cast<float>(wnd.keyboard.GetKey('K'));
 	
-	wnd.Rnd().constantBufferData.view *= DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(inputX * timer.DeltaTime(), 0.0F, inputY * timer.DeltaTime()));
 	wnd.Rnd().constantBufferData.view = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(inputCamera * timer.DeltaTime())) * wnd.Rnd().constantBufferData.view;
+	wnd.Rnd().constantBufferData.view = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(inputX * timer.DeltaTime() * 2.0F, 0.0F, inputY * timer.DeltaTime() * 2.0F)) * wnd.Rnd().constantBufferData.view;
 	
 	wnd.Rnd().EndFrame();
 }
@@ -65,7 +65,7 @@ void Game::LoadLevel()
 			};
 		if (map.get() == blockChar)
 		{
-			drawables.push_back(std::make_unique<Cube>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, numY * 2 - 7, 0.0f));
+			drawables.push_back(std::make_unique<Cube>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, 0.0F, numY * 2 - 7));
 			//wnd.Rnd().DrawTestTriangle(0.0f, numX *2 -10, numY * 2 - 7, 10.0f);
 		}
 	};

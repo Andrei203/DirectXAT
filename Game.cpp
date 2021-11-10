@@ -38,7 +38,10 @@ void Game::Update()
 	}
 	float inputX = static_cast<float>(wnd.keyboard.GetKey('A')) - static_cast<float>(wnd.keyboard.GetKey('D'));
 	float inputY = static_cast<float>(wnd.keyboard.GetKey('W')) - static_cast<float>(wnd.keyboard.GetKey('S'));
+	float inputCamera = static_cast<float>(wnd.keyboard.GetKey('I')) - static_cast<float>(wnd.keyboard.GetKey('K'));
+	
 	wnd.Rnd().constantBufferData.view *= DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(inputX * timer.DeltaTime(), 0.0F, inputY * timer.DeltaTime()));
+	wnd.Rnd().constantBufferData.view = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(inputCamera * timer.DeltaTime())) * wnd.Rnd().constantBufferData.view;
 	
 	wnd.Rnd().EndFrame();
 }

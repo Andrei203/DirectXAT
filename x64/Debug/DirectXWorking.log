@@ -1,4 +1,9 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (DirectXWorking.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Texture.cpp
-  TextureLoader.cpp
+  Game.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Game.cpp(68): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,float,float,float,int,int,float,0>(Renderer &,float &&,float &&,float &&,int &&,int &&,float &&)' being compiled
   DirectXWorking.vcxproj -> D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe

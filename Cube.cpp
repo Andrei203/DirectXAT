@@ -9,25 +9,42 @@ Cube::Cube(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, 
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
             { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
 		}));
-    AddBind(std::make_unique<VertexBuffer>(Rnd, std::vector<Vertex>{
-        { -sizeX, -sizeY, -sizeZ, 0.0F, 0.0F },
-        { +sizeX, -sizeY, -sizeZ, 1.0F, 0.0F },
-        { -sizeX, +sizeY, -sizeZ, 0.0F, 1.0F },
-        { +sizeX, +sizeY, -sizeZ, 1.0F, 1.0F },
-        { -sizeX, -sizeY, +sizeZ, 0.0F, 0.0F },
-        { +sizeX, -sizeY, +sizeZ, 1.0F, 0.0F },
-        { -sizeX, +sizeY, +sizeZ, 0.0F, 1.0F },
-        { +sizeX, +sizeY, +sizeZ, 1.0F, 1.0F },
-    }));
+    AddBind(std::make_unique<VertexBuffer>(Rnd, std::vector<Vertex>
+        {
+            { -sizeX, -sizeY, -sizeZ, 0.0F, 0.0F },
+            { +sizeX, -sizeY, -sizeZ, 1.0F, 0.0F },
+            { -sizeX, -sizeY, +sizeZ, 0.0F, 1.0F },
+            { +sizeX, -sizeY, +sizeZ, 1.0F, 1.0F },
+            { -sizeX, +sizeY, -sizeZ, 0.0F, 0.0F },
+            { +sizeX, +sizeY, -sizeZ, 1.0F, 0.0F },
+            { -sizeX, +sizeY, +sizeZ, 0.0F, 1.0F },
+            { +sizeX, +sizeY, +sizeZ, 1.0F, 1.0F },
+            { -sizeX, -sizeY, +sizeZ, 0.0F, 1.0F },
+            { +sizeX, -sizeY, +sizeZ, 1.0F, 1.0F },
+            { -sizeX, +sizeY, +sizeZ, 0.0F, 0.0F },
+            { +sizeX, +sizeY, +sizeZ, 1.0F, 0.0F },
+            { -sizeX, -sizeY, -sizeZ, 1.0F, 1.0F },
+            { +sizeX, -sizeY, -sizeZ, 0.0F, 1.0F },
+            { -sizeX, +sizeY, -sizeZ, 1.0F, 0.0F },
+            { +sizeX, +sizeY, -sizeZ, 0.0F, 0.0F },
+            { -sizeX, -sizeY, +sizeZ, 1.0F, 1.0F },
+            { -sizeX, +sizeY, +sizeZ, 1.0F, 0.0F },
+            { -sizeX, -sizeY, -sizeZ, 0.0F, 1.0F },
+            { -sizeX, +sizeY, -sizeZ, 0.0F, 0.0F },
+            { +sizeX, -sizeY, +sizeZ, 0.0F, 1.0F },
+            { +sizeX, +sizeY, +sizeZ, 0.0F, 0.0F },
+            { +sizeX, -sizeY, -sizeZ, 1.0F, 1.0F },
+            { +sizeX, +sizeY, -sizeZ, 1.0F, 0.0F },
+        }));
     AddBind(std::make_unique<IndexBuffer>(Rnd, std::vector<unsigned short>{
-        0,2,1, 2,3,1,
-        1,3,5, 3,7,5,
-        2,6,3, 3,6,7,
-        4,5,7, 4,7,6,
-        0,4,2, 2,4,6,
-        0,1,4, 1,5,4
+        0, 2, 1, 2, 3, 1,
+        4, 5, 6, 6, 5, 7,
+        8, 10, 9, 9, 10, 11,
+        12, 13, 14, 13, 15, 14,
+        16, 18, 17, 17, 18, 19,
+        20, 21, 22, 22, 21, 23
     }));
-    AddBind(std::make_unique<Texture>(Rnd, L"xbox.png"));
+    AddBind(std::make_unique<Texture>(Rnd, L"Bricks.jpg"));
     AddBind(std::make_unique<TextureSampler>(Rnd));
 }
 

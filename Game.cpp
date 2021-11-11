@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "Plane.h"
+#include "Enemy.h"
 
 Game::Game():wnd(800,600,"Game Window")
 {
@@ -9,6 +10,7 @@ Game::Game():wnd(800,600,"Game Window")
 
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, 8.0F, 1.0F, 0.0f , -1.0F, 0.0f));
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, -8.0F, 1.0F, 0.0f , 1.0F, 0.0f));
+	drawables.push_back(std::make_unique<Enemy>(wnd.Rnd(), 1.0F, 1.0F, -1.0F, 0.0f , 0.0F, 0.0f));
 }
 
 int Game::init()

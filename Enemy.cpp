@@ -17,7 +17,7 @@ Enemy::Enemy(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX
         { +sizeX, +sizeY, 0.0F,  1.0F, 0.0F },
     }));
     AddBind(std::make_unique<IndexBuffer>(Rnd, std::vector<unsigned short>{
-        0, 2, 1, 2, 3, 1,
+        0, 1, 2, 2, 1, 3,
     }));
     AddBind(std::make_unique<Texture>(Rnd, L"enemy.jpg"));
     AddBind(std::make_unique<TextureSampler>(Rnd));

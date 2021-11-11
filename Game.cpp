@@ -58,6 +58,7 @@ void Game::LoadLevel()
 	std::fstream map;
 	map.open("TestMap.txt");
 	char blockChar = '#';
+	//char blockChar = 'E';
 	int numX = 0;
 	int numY = 0;
 

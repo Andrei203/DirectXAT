@@ -1,10 +1,14 @@
 #include "Game.h"
 #include <iostream>
 #include <fstream>
+#include "Plane.h"
 
 Game::Game():wnd(800,600,"Game Window")
 {
 	LoadLevel();
+
+	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, 8.0F, 1.0F, 0.0f , -1.0F, 0.0f));
+	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, -8.0F, 1.0F, 0.0f , 1.0F, 0.0f));
 }
 
 int Game::init()
@@ -28,7 +32,7 @@ void Game::Update()
 	const float t = timer.Time();
 	const float r = sin(t) / 2.0f + 0.5f;
 	const float g = sin(t+2.0f) / 2.0f + 0.5f;
-	const float b = sin(t+4.0f) / 2.0f + 0.5f;
+	const float b = sin(t+4.0f) / 2.0f + 0.5f;	
 	
 	wnd.Rnd().ClearBuffer(r, g, b);
 
@@ -36,6 +40,7 @@ void Game::Update()
 	{
 		drawable->Draw(wnd.Rnd());
 	}
+	
 	float inputX = static_cast<float>(wnd.keyboard.GetKey('A')) - static_cast<float>(wnd.keyboard.GetKey('D'));
 	float inputY = static_cast<float>(wnd.keyboard.GetKey('W')) - static_cast<float>(wnd.keyboard.GetKey('S'));
 	float inputCamera = static_cast<float>(wnd.keyboard.GetKey('I')) - static_cast<float>(wnd.keyboard.GetKey('K'));
@@ -69,5 +74,6 @@ void Game::LoadLevel()
 			//wnd.Rnd().DrawTestTriangle(0.0f, numX *2 -10, numY * 2 - 7, 10.0f);
 		}
 	};
+
 	map.close();
 }

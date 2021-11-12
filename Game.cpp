@@ -10,7 +10,7 @@ Game::Game():wnd(800,600,"Game Window")
 
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, 8.0F, 1.0F, 0.0f , -1.0F, 0.0f));
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, -8.0F, 1.0F, 0.0f , 1.0F, 0.0f));
-	drawables.push_back(std::make_unique<Enemy>(wnd.Rnd(), 1.0F, 1.0F, -1.0F, 0.0f , 0.0F, 0.0f));
+	
 }
 
 int Game::init()
@@ -58,23 +58,29 @@ void Game::LoadLevel()
 	std::fstream map;
 	map.open("TestMap.txt");
 	char blockChar = '#';
-	//char blockChar = 'E';
+	char EnemyChar = 'E';
+	
 	int numX = 0;
 	int numY = 0;
 
 
 	while (!map.eof())
 	{
+		char c = map.get();
 		numX++; 
 			if (numX == 10)
 			{
 				numY++;
 				numX = 0;
 			};
-		if (map.get() == blockChar)
+		if (c == blockChar)
 		{
 			drawables.push_back(std::make_unique<Cube>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, 0.0F, numY * 2 - 7));
 			//wnd.Rnd().DrawTestTriangle(0.0f, numX *2 -10, numY * 2 - 7, 10.0f);
+		}
+		else if (c == EnemyChar)
+		{
+			drawables.push_back(std::make_unique<Enemy>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, 0.0F, numY * 2 - 7));
 		}
 	};
 

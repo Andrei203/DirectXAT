@@ -18,9 +18,15 @@ Enemy::Enemy(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX
     }));
     AddBind(std::make_unique<IndexBuffer>(Rnd, std::vector<unsigned short>{
         0, 1, 2, 2, 1, 3,
-    }));
+    })); 
     AddBind(std::make_unique<Texture>(Rnd, L"enemy.jpg"));
     AddBind(std::make_unique<TextureSampler>(Rnd));
+}
+
+void Enemy::Update()
+{
+    timer.Tick();
+    
 }
 
 void Enemy::Draw(Renderer& Rnd)
@@ -29,3 +35,5 @@ void Enemy::Draw(Renderer& Rnd)
     Rnd.SetModelMatrix(transform);
     Rnd.GetContext()->DrawIndexed(36U, 0U, 0U);
 }
+
+

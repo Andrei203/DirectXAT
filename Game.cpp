@@ -37,19 +37,13 @@ void Game::Update()
 	const float b = sin(t+4.0f) / 2.0f + 0.5f;	
 	
 	wnd.Rnd().ClearBuffer(r, g, b);
-
+	player.Update(wnd.keyboard, timer);
+	player.Draw(wnd.Rnd());
 	for (auto& drawable : drawables)
 	{
 		drawable->Draw(wnd.Rnd());
 	}
-	
-	float inputX = static_cast<float>(wnd.keyboard.GetKey('A')) - static_cast<float>(wnd.keyboard.GetKey('D'));
-	float inputY = static_cast<float>(wnd.keyboard.GetKey('W')) - static_cast<float>(wnd.keyboard.GetKey('S'));
-	float inputCamera = static_cast<float>(wnd.keyboard.GetKey('I')) - static_cast<float>(wnd.keyboard.GetKey('K'));
-	
-	wnd.Rnd().constantBufferData.view = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(inputCamera * timer.DeltaTime())) * wnd.Rnd().constantBufferData.view;
-	wnd.Rnd().constantBufferData.view = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(inputX * timer.DeltaTime() * 2.0F, 0.0F, inputY * timer.DeltaTime() * 2.0F)) * wnd.Rnd().constantBufferData.view;
-	
+
 	wnd.Rnd().EndFrame();
 }
 

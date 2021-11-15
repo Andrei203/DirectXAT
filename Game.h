@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "GameTime.h"
 #include "Cube.h"
+#include "Player.h"
 class Game
 {
 public:
@@ -13,6 +14,7 @@ private:
 private:
 	Window wnd;
 	GameTime timer;
+	Player player;
 	std::vector<std::unique_ptr<Drawable>> drawables;
 };
 

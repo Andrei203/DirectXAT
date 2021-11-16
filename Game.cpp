@@ -10,7 +10,7 @@ Game::Game():wnd(800,600,"Game Window")
 
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, 8.0F, 1.0F, 0.0f , -1.0F, 0.0f));
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, -8.0F, 1.0F, 0.0f , 1.0F, 0.0f));
-	
+	bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, 0.0f , 0.0F, 0.0f));
 }
 
 int Game::init()
@@ -24,7 +24,6 @@ int Game::init()
 		
 		Update();
 	}
-
 }
 
 void Game::Update()
@@ -45,6 +44,7 @@ void Game::Update()
 	{
 		drawable->Draw(wnd.Rnd());
 	}
+	
 	EnemyCollision(prevPlayerPos);
 	WallCollision(prevPlayerPos);
 	wnd.Rnd().EndFrame();
@@ -58,25 +58,16 @@ void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
 	{
 		enemy->playerRotation(player.playerRot);
 		auto x = std::fmaxf(enemy->pos.x - 0.5F, std::fminf(player.player3pos.x, enemy->pos.x + 0.5F));
-		auto z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(prevPlayerPos.z, enemy->pos.z + 0.5F));
+		auto z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(player.player3pos.z, enemy->pos.z + 0.5F));
 		auto distance = std::sqrtf((x - player.player3pos.x) * (x - player.player3pos.x) +
-			(z - prevPlayerPos.z) * (z - prevPlayerPos.z));
-		if (distance < 0.75F)
-		{
-			player.player3pos.x = prevPlayerPos.x;
-		}
-
-		x = std::fmaxf(enemy->pos.x - 0.5F, std::fminf(prevPlayerPos.x, enemy->pos.x + 0.5F));
-		z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(player.player3pos.z, enemy->pos.z + 0.5F));
-		distance = std::sqrtf((x - prevPlayerPos.x) * (x - prevPlayerPos.x) +
 			(z - player.player3pos.z) * (z - player.player3pos.z));
 		if (distance < 0.75F)
 		{
-			player.player3pos.z = prevPlayerPos.z;
+			player.player3pos.x = 100.0F;
 		}
-
 		enemy->Draw(wnd.Rnd());
 	}
+
 }
 
 void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)

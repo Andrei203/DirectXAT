@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
 class Game
 {
 public:
@@ -21,5 +22,6 @@ private:
 	std::vector<std::unique_ptr<Drawable>> drawables;
 	std::vector<std::unique_ptr<Cube>> walls;
 	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<Bullet>> bullet;
 };
 

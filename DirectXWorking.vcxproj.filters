@@ -93,6 +93,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files\Graphics\Drawables</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>Header Files\Graphics\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>Header Files\Graphics\Drawables</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "Cube.h"
 #include "BindableBase.h"
 
-Cube::Cube(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ) : transform(DirectX::XMMatrixTranslation(offsetX,offsetY,offsetZ)), pos(offsetX,offsetY,offsetZ)
+Cube::Cube(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ) : transform(DirectX::XMMatrixTranslation(offsetX,offsetY,offsetZ)), pos(-offsetX,-offsetY,-offsetZ)
 {
 	AddBind(std::make_unique<PixelShader>(Rnd, L"PixelShader.cso"));
 	AddBind(std::make_unique<VertexShader>(Rnd, L"VertexShader.cso", 

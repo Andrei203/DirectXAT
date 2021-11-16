@@ -40,6 +40,7 @@ void Game::Update()
 	auto prevPlayerPos = player.player3pos;
 	player.Update(wnd.keyboard, timer);
 	player.Draw(wnd.Rnd());
+	
 	for (auto& drawable : drawables)
 	{
 		drawable->Draw(wnd.Rnd());
@@ -49,6 +50,35 @@ void Game::Update()
 	wnd.Rnd().EndFrame();
 	
 }
+
+void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
+{
+
+	for (auto& enemy : enemies)
+	{
+		enemy->playerRotation(player.playerRot);
+		auto x = std::fmaxf(enemy->pos.x - 0.5F, std::fminf(player.player3pos.x, enemy->pos.x + 0.5F));
+		auto z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(prevPlayerPos.z, enemy->pos.z + 0.5F));
+		auto distance = std::sqrtf((x - player.player3pos.x) * (x - player.player3pos.x) +
+			(z - prevPlayerPos.z) * (z - prevPlayerPos.z));
+		if (distance < 0.75F)
+		{
+			player.player3pos.x = prevPlayerPos.x;
+		}
+
+		x = std::fmaxf(enemy->pos.x - 0.5F, std::fminf(prevPlayerPos.x, enemy->pos.x + 0.5F));
+		z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(player.player3pos.z, enemy->pos.z + 0.5F));
+		distance = std::sqrtf((x - prevPlayerPos.x) * (x - prevPlayerPos.x) +
+			(z - player.player3pos.z) * (z - player.player3pos.z));
+		if (distance < 0.75F)
+		{
+			player.player3pos.z = prevPlayerPos.z;
+		}
+
+		enemy->Draw(wnd.Rnd());
+	}
+}
+
 void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)
 {
 
@@ -76,32 +106,7 @@ void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)
 	}
 }
 
-void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
-{
 
-	for (auto& enemy : enemies)
-	{
-		auto x = std::fmaxf(enemy->pos.x - 1.0F, std::fminf(player.player3pos.x, enemy->pos.x + 1.0F));
-		auto z = std::fmaxf(enemy->pos.z - 1.0fF, std::fminf(prevPlayerPos.z, enemy->pos.z + 1.0F));
-		auto distance = std::sqrtf((x - player.player3pos.x) * (x - player.player3pos.x) +
-			(z - prevPlayerPos.z) * (z - prevPlayerPos.z));
-		if (distance < 0.75F)
-		{
-			player.player3pos.x = prevPlayerPos.x;
-		}
-
-		x = std::fmaxf(enemy->pos.x - 1.0F, std::fminf(prevPlayerPos.x, enemy->pos.x + 1.0F));
-		z = std::fmaxf(enemy->pos.z - 1.0F, std::fminf(player.player3pos.z, enemy->pos.z + 1.0F));
-		distance = std::sqrtf((x - prevPlayerPos.x) * (x - prevPlayerPos.x) +
-			(z - player.player3pos.z) * (z - player.player3pos.z));
-		if (distance < 0.75F)
-		{
-			player.player3pos.z = prevPlayerPos.z;
-		}
-
-		enemy->Draw(wnd.Rnd());
-	}
-}
 void Game::LoadLevel()
 {
 	std::fstream map;

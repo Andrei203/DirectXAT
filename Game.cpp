@@ -44,14 +44,14 @@ void Game::Update()
 	{
 		drawable->Draw(wnd.Rnd());
 	}
-	
+	EnemyCollision(prevPlayerPos);
 	WallCollision(prevPlayerPos);
 	wnd.Rnd().EndFrame();
 	
 }
 void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)
 {
-	
+
 	for (auto& wall : walls)
 	{
 		auto x = std::fmaxf(wall->pos.x - 1.0F, std::fminf(player.player3pos.x, wall->pos.x + 1.0F));
@@ -73,6 +73,33 @@ void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)
 		}
 
 		wall->Draw(wnd.Rnd());
+	}
+}
+
+void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
+{
+
+	for (auto& enemy : enemies)
+	{
+		auto x = std::fmaxf(enemy->pos.x - 1.0F, std::fminf(player.player3pos.x, enemy->pos.x + 1.0F));
+		auto z = std::fmaxf(enemy->pos.z - 1.0fF, std::fminf(prevPlayerPos.z, enemy->pos.z + 1.0F));
+		auto distance = std::sqrtf((x - player.player3pos.x) * (x - player.player3pos.x) +
+			(z - prevPlayerPos.z) * (z - prevPlayerPos.z));
+		if (distance < 0.75F)
+		{
+			player.player3pos.x = prevPlayerPos.x;
+		}
+
+		x = std::fmaxf(enemy->pos.x - 1.0F, std::fminf(prevPlayerPos.x, enemy->pos.x + 1.0F));
+		z = std::fmaxf(enemy->pos.z - 1.0F, std::fminf(player.player3pos.z, enemy->pos.z + 1.0F));
+		distance = std::sqrtf((x - prevPlayerPos.x) * (x - prevPlayerPos.x) +
+			(z - player.player3pos.z) * (z - player.player3pos.z));
+		if (distance < 0.75F)
+		{
+			player.player3pos.z = prevPlayerPos.z;
+		}
+
+		enemy->Draw(wnd.Rnd());
 	}
 }
 void Game::LoadLevel()
@@ -102,7 +129,7 @@ void Game::LoadLevel()
 		}
 		else if (c == EnemyChar)
 		{
-			drawables.push_back(std::make_unique<Enemy>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, 0.0F, numY * 2 - 7));
+			enemies.push_back(std::make_unique<Enemy>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, numX * 2 - 10, 0.0F, numY * 2 - 7));
 		}
 	};
 	map.close();

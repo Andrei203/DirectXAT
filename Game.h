@@ -11,10 +11,12 @@ public:
 private:
 	void Update();
 	void LoadLevel();
+	void WallCollision(DirectX::XMFLOAT3 prevPlayerPos);
 private:
 	Window wnd;
 	GameTime timer;
 	Player player;
 	std::vector<std::unique_ptr<Drawable>> drawables;
+	std::vector<std::unique_ptr<Cube>> walls;
 };
 

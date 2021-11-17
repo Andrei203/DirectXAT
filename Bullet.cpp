@@ -1,8 +1,13 @@
 #include "Bullet.h"
 #include "BindableBase.h"
+#include <cmath>
 
-Bullet::Bullet(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(-offsetX, -offsetY, -offsetZ)
+Bullet::Bullet(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ, float direction) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(-offsetX, -offsetY, -offsetZ)
 {
+    velocity = DirectX::XMFLOAT3(0.0F, 0.0F, -3.0F);
+    velocity = DirectX::XMFLOAT3(velocity.x * std::cosf(direction) - velocity.z * std::sinf(direction),
+        0.0F,
+        velocity.x * std::sinf(direction) + velocity.z * std::cosf(direction));
     AddBind(std::make_unique<PixelShader>(Rnd, L"PixelShader.cso"));
     AddBind(std::make_unique<VertexShader>(Rnd, L"VertexShader.cso",
         std::vector<D3D11_INPUT_ELEMENT_DESC>{

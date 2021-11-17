@@ -52,7 +52,7 @@ void Game::Update(Keyboard& input)
 	WallCollision(prevPlayerPos);
 	if (input.GetKeyDown(0x20))
 	{
-		bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, player.player3pos.x, player.player3pos.y, player.player3pos.z));
+		bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, player.player3pos.x, player.player3pos.y, player.player3pos.z, player.playerRot));
 	}
 	for (auto& bullet : bullets)
 	{

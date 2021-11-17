@@ -55,9 +55,12 @@ void Bullet::Draw(Renderer& Rnd)
     Rnd.GetContext()->DrawIndexed(36U, 0U, 0U);
 }
 
+
+
 void Bullet::Update(GameTime& time)
 {
     pos.x += velocity.x * time.DeltaTime();
     pos.y += velocity.y * time.DeltaTime();
     pos.z += velocity.z * time.DeltaTime();
+    transform = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
 }

@@ -5,13 +5,14 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Keyboard.h"
 class Game
 {
 public:
 	Game();
 	int init();
 private:
-	void Update();
+	void Update(Keyboard& input);
 	void LoadLevel();
 	void WallCollision(DirectX::XMFLOAT3 prevPlayerPos);
 	void EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos);
@@ -22,6 +23,6 @@ private:
 	std::vector<std::unique_ptr<Drawable>> drawables;
 	std::vector<std::unique_ptr<Cube>> walls;
 	std::vector<std::unique_ptr<Enemy>> enemies;
-	std::vector<std::unique_ptr<Bullet>> bullet;
+	std::vector<std::unique_ptr<Bullet>> bullets;
 };
 

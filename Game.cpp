@@ -3,6 +3,9 @@
 #include <fstream>
 #include "Plane.h"
 #include "Enemy.h"
+#include "Bullet.h"
+#include "Keyboard.h"
+
 
 Game::Game():wnd(800,600,"Game Window")
 {
@@ -10,7 +13,8 @@ Game::Game():wnd(800,600,"Game Window")
 
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, 8.0F, 1.0F, 0.0f , -1.0F, 0.0f));
 	drawables.push_back(std::make_unique<Plane>(wnd.Rnd(), 9.0F, -8.0F, 1.0F, 0.0f , 1.0F, 0.0f));
-	bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, 0.0f , 0.0F, 0.0f));
+	//bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, player.player3pos.x, player.player3pos.y, player.player3pos.z));
+	
 }
 
 int Game::init()
@@ -21,39 +25,47 @@ int Game::init()
 		{
 			return *ecode;
 		}	
-		
-		Update();
+
+		Update(wnd.keyboard);
 	}
 }
 
-void Game::Update()
+void Game::Update(Keyboard& input)
 {
 	timer.Tick();
 	wnd.keyboard.Tick();
 	const float t = timer.Time();
 	const float r = sin(t) / 2.0f + 0.5f;
-	const float g = sin(t+2.0f) / 2.0f + 0.5f;
-	const float b = sin(t+4.0f) / 2.0f + 0.5f;	
-	
+	const float g = sin(t + 2.0f) / 2.0f + 0.5f;
+	const float b = sin(t + 4.0f) / 2.0f + 0.5f;
+
 	wnd.Rnd().ClearBuffer(r, g, b);
 	auto prevPlayerPos = player.player3pos;
 	player.Update(wnd.keyboard, timer);
 	player.Draw(wnd.Rnd());
-	
+
 	for (auto& drawable : drawables)
 	{
-		drawable->Draw(wnd.Rnd());
+		drawable->Draw(wnd.Rnd());	
 	}
-	
 	EnemyCollision(prevPlayerPos);
 	WallCollision(prevPlayerPos);
+	if (input.GetKeyDown(0x20))
+	{
+		bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, player.player3pos.x, player.player3pos.y, player.player3pos.z));
+	}
+	for (auto& bullet : bullets)
+	{
+		bullet->Update(timer);
+		bullet->Draw(wnd.Rnd());
+		
+	}
 	wnd.Rnd().EndFrame();
-	
+
 }
 
 void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
 {
-
 	for (auto& enemy : enemies)
 	{
 		enemy->playerRotation(player.playerRot);
@@ -63,11 +75,10 @@ void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
 			(z - player.player3pos.z) * (z - player.player3pos.z));
 		if (distance < 0.75F)
 		{
-			player.player3pos.x = 100.0F;
+			player.player3pos.x = 15.0F;
 		}
 		enemy->Draw(wnd.Rnd());
 	}
-
 }
 
 void Game::WallCollision(DirectX::XMFLOAT3 prevPlayerPos)

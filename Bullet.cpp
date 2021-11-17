@@ -2,7 +2,7 @@
 #include "BindableBase.h"
 #include <cmath>
 
-Bullet::Bullet(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ, float direction) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(-offsetX, -offsetY, -offsetZ)
+Bullet::Bullet(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ, float direction) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(offsetX, offsetY, offsetZ)
 {
     velocity = DirectX::XMFLOAT3(0.0F, 0.0F, -3.0F);
     velocity = DirectX::XMFLOAT3(velocity.x * std::cosf(direction) - velocity.z * std::sinf(direction),
@@ -55,9 +55,12 @@ Bullet::Bullet(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offse
 
 void Bullet::Draw(Renderer& Rnd)
 {
-    Drawable::Draw(Rnd);
-    Rnd.SetModelMatrix(transform);
-    Rnd.GetContext()->DrawIndexed(36U, 0U, 0U);
+    if (!isDestroyed)
+    {
+        Drawable::Draw(Rnd);
+        Rnd.SetModelMatrix(transform);
+        Rnd.GetContext()->DrawIndexed(36U, 0U, 0U);
+    }
 }
 
 

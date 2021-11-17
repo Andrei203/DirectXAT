@@ -3,8 +3,8 @@
 
 void Player::Update(Keyboard& input, GameTime& timer)
 {
-	float inputX = static_cast<float>(input.GetKey('A')) - static_cast<float>(input.GetKey('D'));
-	float inputY = static_cast<float>(input.GetKey('W')) - static_cast<float>(input.GetKey('S'));
+	float inputX = static_cast<float>(input.GetKey('D')) - static_cast<float>(input.GetKey('A'));
+	float inputY = static_cast<float>(input.GetKey('S')) - static_cast<float>(input.GetKey('W'));
 	
 	float relativeX = inputX * std::cosf(playerRot) - inputY * std::sinf(playerRot);
 	float relativeY = inputX * std::sinf(playerRot) + inputY * std::cosf(playerRot);
@@ -18,7 +18,7 @@ void Player::Update(Keyboard& input, GameTime& timer)
 void Player::Draw(Renderer& Rnd)
 {
 	DirectX::XMMATRIX matrix = DirectX::XMMatrixIdentity();
-	matrix = DirectX::XMMatrixTranslation(player3pos.x, player3pos.y, player3pos.z) * matrix;
+	matrix = DirectX::XMMatrixTranslation(-player3pos.x, -player3pos.y, -player3pos.z) * matrix;
 	matrix *= DirectX::XMMatrixRotationY(playerRot);
 	
 	Rnd.SetViewMatrix(matrix);

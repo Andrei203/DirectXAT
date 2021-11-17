@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "BindableBase.h"
 
-Enemy::Enemy(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(DirectX::XMFLOAT3(-offsetX,-offsetY,-offsetZ))
+Enemy::Enemy(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX, float offsetY, float offsetZ) : transform(DirectX::XMMatrixTranslation(offsetX, offsetY, offsetZ)), pos(DirectX::XMFLOAT3(offsetX,offsetY,offsetZ))
 {
     AddBind(std::make_unique<PixelShader>(Rnd, L"PixelShader.cso"));
     AddBind(std::make_unique<VertexShader>(Rnd, L"VertexShader.cso",
@@ -27,20 +27,24 @@ Enemy::Enemy(Renderer& Rnd, float sizeX, float sizeY, float sizeZ, float offsetX
 void Enemy::Update()
 {
     timer.Tick();
+
     
 }
 
 void Enemy::playerRotation(float playerRot)
 {
-    transform = DirectX::XMMatrixTranslation(-pos.x, -pos.y, -pos.z);
+    transform = DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
     transform = DirectX::XMMatrixRotationY(-playerRot) * transform;
 }
 
 void Enemy::Draw(Renderer& Rnd)
 {
-    Drawable::Draw(Rnd);
+    if (!isDestroyed)
+    {
+       Drawable::Draw(Rnd);
     Rnd.SetModelMatrix(transform);
     Rnd.GetContext()->DrawIndexed(36U, 0U, 0U);
+    }
 }
 
 

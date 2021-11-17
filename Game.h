@@ -16,6 +16,8 @@ private:
 	void LoadLevel();
 	void WallCollision(DirectX::XMFLOAT3 prevPlayerPos);
 	void EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos);
+	void BulletWallCollision();
+	void BulletEnemyCollision();
 private:
 	Window wnd;
 	GameTime timer;

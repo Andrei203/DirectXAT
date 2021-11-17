@@ -48,8 +48,11 @@ void Game::Update(Keyboard& input)
 	{
 		drawable->Draw(wnd.Rnd());	
 	}
+	BulletEnemyCollision();
 	EnemyCollision(prevPlayerPos);
 	WallCollision(prevPlayerPos);
+	
+	//BulletWallCollision(bulletPos);
 	if (input.GetKeyDown(0x20))
 	{
 		bullets.push_back(std::make_unique<Bullet>(wnd.Rnd(), 0.10F, 0.10f, 0.10F, player.player3pos.x, player.player3pos.y, player.player3pos.z, player.playerRot));
@@ -64,10 +67,39 @@ void Game::Update(Keyboard& input)
 
 }
 
+
+void Game::BulletWallCollision()
+{
+
+
+}
+
+void Game::BulletEnemyCollision()
+{
+	for (size_t i = 0; i < bullets.size(); i++)
+	{
+		auto& bullet = bullets[i];
+		for (size_t j = 0; j < enemies.size(); j++)
+		{
+			auto& enemy = enemies[j];
+
+			auto x = std::fmaxf(enemy->pos.x - 0.5f, std::fminf(bullet->pos.x, enemy->pos.x + 0.5F));
+			auto z = std::fmaxf(enemy->pos.z - 0.5f, std::fminf(bullet->pos.z, enemy->pos.z + 0.5F));
+			auto distance = std::sqrtf((x - bullet->pos.x) * (x - bullet->pos.x) + (z - bullet->pos.z) * (z - bullet->pos.z));
+			if (!enemy->isDestroyed && distance < 0.2F)
+			{
+				enemies.erase(enemies.begin() + j++);
+				bullets.erase(bullets.begin() + i--);
+			}
+		}
+	}
+}
+
 void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
 {
 	for (auto& enemy : enemies)
 	{
+		
 		enemy->playerRotation(player.playerRot);
 		auto x = std::fmaxf(enemy->pos.x - 0.5F, std::fminf(player.player3pos.x, enemy->pos.x + 0.5F));
 		auto z = std::fmaxf(enemy->pos.z - 0.5F, std::fminf(player.player3pos.z, enemy->pos.z + 0.5F));
@@ -76,6 +108,10 @@ void Game::EnemyCollision(DirectX::XMFLOAT3 prevPlayerPos)
 		if (distance < 0.75F)
 		{
 			player.player3pos.x = 15.0F;
+		}
+		if (enemy->isDestroyed)
+		{
+			continue;
 		}
 		enemy->Draw(wnd.Rnd());
 	}

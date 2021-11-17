@@ -80,7 +80,7 @@ void Game::BulletWallCollision()
 			auto z = std::fmaxf(wall->pos.z - 1.0F, std::fminf(bullet->pos.z, wall->pos.z + 1.0F));
 			auto distance = std::sqrtf((x - bullet->pos.x) * (x - bullet->pos.x) +
 				(z - bullet->pos.z) * (z - bullet->pos.z));
-			if (distance < 0.30F && !bullet->isDestroyed)
+			if (distance < 0.25F && !bullet->isDestroyed)
 			{
 				bullets.erase(bullets.begin() + i--);
 			}
@@ -105,6 +105,11 @@ void Game::BulletEnemyCollision()
 			{
 				enemies.erase(enemies.begin() + j++);
 				bullets.erase(bullets.begin() + i--);
+				if (enemies.empty())
+				{
+					wnd.keyboard.inputEnabled = false;
+					drawables.push_back(std::make_unique<WinCube>(wnd.Rnd(), 1.0F, 1.0F, 1.0F, player.player3pos.x, player.player3pos.y, player.player3pos.z));
+				}
 			}
 		}
 	}

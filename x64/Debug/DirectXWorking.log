@@ -1,9 +1,48 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (DirectXWorking.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Bullet.cpp
   Game.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+  Keyboard.cpp
+  Player.cpp
+  WinMain.cpp
+  Window.cpp
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(128,19): warning C4244: 'argument': conversion from 'WPARAM' to 'unsigned int', possible loss of data
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(131,19): warning C4244: 'argument': conversion from 'WPARAM' to 'unsigned int', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\optional(71,17): warning C4244: 'initializing': conversion from 'WPARAM' to 'int', possible loss of data (compiling source file Window.cpp)
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(140): message : see reference to function template instantiation 'std::_Optional_destruct_base<_Ty,true>::_Optional_destruct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
           with
           [
               _Ty=int
           ]
-D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Game.cpp(185): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,float,float,float,int,float,int,0>(Renderer &,float &&,float &&,float &&,int &&,float &&,int &&)' being compiled
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(140): message : see reference to function template instantiation 'std::_Optional_destruct_base<_Ty,true>::_Optional_destruct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\optional(188): message : see reference to function template instantiation 'std::_Optional_construct_base<_Ty>::_Optional_construct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ] (compiling source file Window.cpp)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\optional(188): message : see reference to function template instantiation 'std::_Optional_construct_base<_Ty>::_Optional_construct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ] (compiling source file Window.cpp)
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(86): message : see reference to function template instantiation 'std::optional<int>::optional<WPARAM&,0>(_Ty2)' being compiled
+          with
+          [
+              _Ty2=WPARAM &
+          ]
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(86): message : see reference to function template instantiation 'std::optional<int>::optional<WPARAM&,0>(_Ty2)' being compiled
+          with
+          [
+              _Ty2=WPARAM &
+          ]
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Window.cpp(112): warning C4715: 'Window::HandleMsgSetup': not all control paths return a value
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3416,56): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ] (compiling source file Game.cpp)
+D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\Game.cpp(190): message : see reference to function template instantiation 'std::unique_ptr<Cube,std::default_delete<Cube>> std::make_unique<Cube,Renderer&,float,float,float,int,float,int,0>(Renderer &,float &&,float &&,float &&,int &&,float &&,int &&)' being compiled
   DirectXWorking.vcxproj -> D:\Uni work\Year 3\Advanced Technology\Direct X11 Work\x64\Debug\DirectXGame.exe

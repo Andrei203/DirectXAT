@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Keyboard.h"
+#include "WinCube.h"
 class Game
 {
 public:

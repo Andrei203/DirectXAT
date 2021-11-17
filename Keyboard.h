@@ -10,6 +10,8 @@ public:
 	bool GetKeyUp(unsigned int key);
 	bool GetKey(unsigned int key);
 
+	bool inputEnabled = true;
+
 private:
 	std::bitset<256U> pendingKeystates;
 	std::bitset<256U> keystates;

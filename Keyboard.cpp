@@ -13,15 +13,15 @@ void Keyboard::Tick()
 
 bool Keyboard::GetKeyDown(unsigned int key)
 {
-    return keystates[key] && !prevKeystates[key];
+    return keystates[key] && !prevKeystates[key] && inputEnabled;
 }
 
 bool Keyboard::GetKeyUp(unsigned int key)
 {
-    return !keystates[key] && prevKeystates[key];
+    return !keystates[key] && prevKeystates[key] && inputEnabled;
 }
 
 bool Keyboard::GetKey(unsigned int key)
 {
-    return keystates[key];
+    return keystates[key] && inputEnabled;
 }

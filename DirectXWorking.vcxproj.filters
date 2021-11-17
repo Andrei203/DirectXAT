@@ -96,6 +96,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WinCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files\Graphics\Drawables</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Graphics\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="WinCube.h">
       <Filter>Header Files\Graphics\Drawables</Filter>
     </ClInclude>
   </ItemGroup>

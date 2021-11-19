@@ -197,5 +197,3 @@ void Game::LoadLevel()
 	};
 	map.close();
 }
-
-
